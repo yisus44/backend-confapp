@@ -14,6 +14,11 @@ export class Conference {
   @Column({
     type: "text",
   })
+  presenter: string;
+
+  @Column({
+    type: "text",
+  })
   location: string;
 
   @Column({

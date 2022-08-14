@@ -36,7 +36,7 @@ function createUser(req, res) {
             user.email = req.body.email;
             const newUser = yield repository.save(user);
             const token = (0, utils_1.generateJWT)(newUser.id);
-            const response = new generic_response_1.ResponseDTO({ newUser, token }, true, http_status_codes_1.httpStatusCode.OK, null);
+            const response = new generic_response_1.ResponseDTO(Object.assign(Object.assign({}, newUser), { token }), true, http_status_codes_1.httpStatusCode.OK, null);
             res.status(response.statusCode).send(response);
         }
         catch (error) {
@@ -66,7 +66,7 @@ function updateUser(req, res) {
             }
             yield repository.update(id, req.body);
             const updatedUser = yield repository.findOne(id);
-            const response = new generic_response_1.ResponseDTO({ updatedUser }, true, http_status_codes_1.httpStatusCode.OK, null);
+            const response = new generic_response_1.ResponseDTO(Object.assign({}, updatedUser), true, http_status_codes_1.httpStatusCode.OK, null);
             res.status(response.statusCode).send(response);
         }
         catch (error) {
@@ -90,7 +90,7 @@ function deleteUser(req, res) {
                 throw new not_found_error_1.NotFoundError();
             }
             yield repository.delete(id);
-            const response = new generic_response_1.ResponseDTO({ userToDelete }, true, http_status_codes_1.httpStatusCode.OK, null);
+            const response = new generic_response_1.ResponseDTO(Object.assign({}, userToDelete), true, http_status_codes_1.httpStatusCode.OK, null);
             res.status(response.statusCode).send(response);
         }
         catch (error) {
@@ -113,7 +113,7 @@ function findByIdUser(req, res) {
             if (!userFound) {
                 throw new not_found_error_1.NotFoundError();
             }
-            const response = new generic_response_1.ResponseDTO({ userFound }, true, http_status_codes_1.httpStatusCode.OK, null);
+            const response = new generic_response_1.ResponseDTO(Object.assign({}, userFound), true, http_status_codes_1.httpStatusCode.OK, null);
             res.status(response.statusCode).send(response);
         }
         catch (error) {

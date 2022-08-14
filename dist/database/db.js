@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 const user_model_1 = require("../app/user/user.model");
 const typeorm_1 = require("typeorm");
+const conference_model_1 = require("../app/conference/conference.model");
+const conference_review_model_1 = require("../app/conference-review/conference-review.model");
 (0, typeorm_1.createConnection)({
     type: "postgres",
     host: process.env.PG_HOST,
@@ -19,7 +21,7 @@ const typeorm_1 = require("typeorm");
     username: process.env.PG_USER,
     password: process.env.PG_PASSWORD,
     database: process.env.PG_DB,
-    entities: [user_model_1.User],
+    entities: [user_model_1.User, conference_model_1.Conference, conference_review_model_1.ConferenceReview],
     synchronize: true,
     logging: false,
     ssl: true,
