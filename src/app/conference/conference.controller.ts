@@ -27,6 +27,8 @@ async function createConference(
     const conference = new Conference();
     conference.conferenceName = req.body.conferenceName;
     conference.location = req.body.location;
+    conference.lat = req.body.lat;
+    conference.long = req.body.long;
     if (req.body.img) {
       conference.img = req.body.img;
     }

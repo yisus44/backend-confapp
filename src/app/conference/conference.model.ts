@@ -22,6 +22,16 @@ export class Conference {
   })
   img: string;
 
+  @Column({
+    type: "decimal",
+  })
+  lat: number;
+
+  @Column({
+    type: "decimal",
+  })
+  long: number;
+
   @OneToMany(
     () => ConferenceReview,
     (conferenceReview) => conferenceReview.conference
