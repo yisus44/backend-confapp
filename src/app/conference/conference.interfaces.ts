@@ -7,4 +7,5 @@ export interface createConferenceBody extends Request {
   lat: number;
   long: number;
   img?: string;
+  date: string;
 }

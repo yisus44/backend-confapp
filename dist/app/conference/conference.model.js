@@ -56,6 +56,13 @@ __decorate([
     __metadata("design:type", Number)
 ], Conference.prototype, "long", void 0);
 __decorate([
+    (0, typeorm_1.Column)({
+        type: "text",
+        nullable: true,
+    }),
+    __metadata("design:type", String)
+], Conference.prototype, "date", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => conference_review_model_1.ConferenceReview, (conferenceReview) => conferenceReview.conference),
     __metadata("design:type", Array)
 ], Conference.prototype, "reviews", void 0);

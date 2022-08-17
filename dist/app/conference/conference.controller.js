@@ -33,6 +33,7 @@ function createConference(req, res) {
             conference.lat = req.body.lat;
             conference.long = req.body.long;
             conference.presenter = req.body.presenter;
+            conference.date = req.body.date;
             if (req.body.img) {
                 conference.img = req.body.img;
             }

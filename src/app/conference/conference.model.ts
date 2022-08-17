@@ -37,6 +37,12 @@ export class Conference {
   })
   long: number;
 
+  @Column({
+    type: "text",
+    nullable: true,
+  })
+  date: string;
+
   @OneToMany(
     () => ConferenceReview,
     (conferenceReview) => conferenceReview.conference
