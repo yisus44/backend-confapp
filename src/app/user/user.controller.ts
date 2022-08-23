@@ -28,6 +28,7 @@ async function createUser(req: RequestBody<createUserBody>, res: Response) {
     user.lastName = req.body.lastName;
     user.password = req.body.password;
     user.email = req.body.email;
+    user.isAdmin = false;
     const newUser = await repository.save(user);
 
     const token = generateJWT(newUser.id);

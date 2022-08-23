@@ -28,6 +28,12 @@ export class User {
   })
   email: string;
 
+  @Column({
+    type: "boolean",
+    nullable: true,
+  })
+  isAdmin: boolean;
+
   @OneToMany(
     () => ConferenceReview,
     (conferenceReview) => conferenceReview.user
