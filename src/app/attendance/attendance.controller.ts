@@ -136,6 +136,34 @@ async function getAttendanceByPayload(req: Request, res: Response) {
   }
 }
 
+async function deletetAttendanceByPayload(req: Request, res: Response) {
+  const errors = validationResult(req);
+  try {
+    const { userId, conferenceId } = req.params;
+    if (!errors.isEmpty()) {
+      throw new RequestValidationError(errors.array());
+    }
+    const repository = getConnection().getRepository(ConferenceAttendance);
+    const prevAttendance = await repository
+      .createQueryBuilder()
+      .delete()
+      .from(ConferenceAttendance)
+      .where("userId=:userId", { userId })
+      .andWhere("conferenceId=:conferenceId", { conferenceId })
+      .execute();
+    const response = new ResponseDTO(
+      prevAttendance,
+      true,
+      httpStatusCode.OK,
+      null
+    );
+    return res.status(response.statusCode).send(response);
+  } catch (error) {
+    const response = errorHandler(error);
+    res.status(response.statusCode).send(response);
+  }
+}
+
 async function deleteConferenceAttendance(req: Request, res: Response) {
   const errors = validationResult(req);
   console.log(req.body);
@@ -170,4 +198,5 @@ export {
   getConferenceAttendanceById,
   deleteConferenceAttendance,
   getAttendanceByPayload,
+  deletetAttendanceByPayload,
 };

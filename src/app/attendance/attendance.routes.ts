@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createConferenceAttendance,
   deleteConferenceAttendance,
+  deletetAttendanceByPayload,
   getAttendanceByPayload,
   getConferenceAttendanceById,
 } from "./attendance.controller";
@@ -13,6 +14,10 @@ conferenceAttendanceRouter.get("/conf/att/:id", getConferenceAttendanceById);
 conferenceAttendanceRouter.get(
   "/conf/:conferenceId/att/usr/:userId",
   getAttendanceByPayload
+);
+conferenceAttendanceRouter.delete(
+  "/conf/:conferenceId/att/usr/:userId",
+  deletetAttendanceByPayload
 );
 conferenceAttendanceRouter.delete("/conf/att/:id", deleteConferenceAttendance);
 // conferenceAttendanceRouter.get("/conf", findAllConferences);
