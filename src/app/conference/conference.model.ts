@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { ConferenceAttendance } from "../attendance/attendance.model";
 import { ConferenceReview } from "../conference-review/conference-review.model";
 
 @Entity()
@@ -48,4 +49,10 @@ export class Conference {
     (conferenceReview) => conferenceReview.conference
   )
   reviews: ConferenceReview[];
+
+  @OneToMany(
+    () => ConferenceAttendance,
+    (conferenceAttendance) => conferenceAttendance.conference
+  )
+  attendance: ConferenceAttendance[];
 }

@@ -62,6 +62,7 @@ async function findConferenceById(req: Request, res: Response) {
       .createQueryBuilder("conf")
       .where({ id })
       .leftJoinAndSelect("conf.reviews", "conferenceReviews")
+      .leftJoinAndSelect("conf.attendance", "conferenceAttendace")
       .getOne();
     if (!conferenceFound) {
       throw new NotFoundError();
@@ -89,6 +90,7 @@ async function findAllConferences(req: Request, res: Response) {
     const conferencesFound = await repository
       .createQueryBuilder("conf")
       .leftJoinAndSelect("conf.reviews", "conferenceReviews")
+      .leftJoinAndSelect("conf.attendance", "conferenceAttendace")
       .getMany();
     if (!conferencesFound) {
       throw new NotFoundError();

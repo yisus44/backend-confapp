@@ -1,4 +1,5 @@
 import express from "express";
+import { conferenceAttendanceRouter } from "./app/attendance/attendance.routes";
 import { conferenceReview } from "./app/conference-review/conference.routes";
 import { conferenceRouter } from "./app/conference/conference.routes";
 import { sessionRouter } from "./app/session/session.routes";
@@ -12,6 +13,7 @@ app.use(userRouter);
 app.use(sessionRouter);
 app.use(conferenceRouter);
 app.use(conferenceReview);
+app.use(conferenceAttendanceRouter);
 app.get("/", function (req, res) {
   res.send("Server up and running");
 });
