@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 const express_1 = __importDefault(require("express"));
+const attendance_routes_1 = require("./app/attendance/attendance.routes");
 const conference_routes_1 = require("./app/conference-review/conference.routes");
 const conference_routes_2 = require("./app/conference/conference.routes");
 const session_routes_1 = require("./app/session/session.routes");
@@ -16,6 +17,7 @@ app.use(user_routes_1.userRouter);
 app.use(session_routes_1.sessionRouter);
 app.use(conference_routes_2.conferenceRouter);
 app.use(conference_routes_1.conferenceReview);
+app.use(attendance_routes_1.conferenceAttendanceRouter);
 app.get("/", function (req, res) {
     res.send("Server up and running");
 });

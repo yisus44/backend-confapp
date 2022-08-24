@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Conference = void 0;
 const typeorm_1 = require("typeorm");
+const attendance_model_1 = require("../attendance/attendance.model");
 const conference_review_model_1 = require("../conference-review/conference-review.model");
 let Conference = class Conference {
 };
@@ -66,6 +67,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => conference_review_model_1.ConferenceReview, (conferenceReview) => conferenceReview.conference),
     __metadata("design:type", Array)
 ], Conference.prototype, "reviews", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => attendance_model_1.ConferenceAttendance, (conferenceAttendance) => conferenceAttendance.conference),
+    __metadata("design:type", Array)
+], Conference.prototype, "attendance", void 0);
 Conference = __decorate([
     (0, typeorm_1.Entity)()
 ], Conference);

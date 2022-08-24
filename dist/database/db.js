@@ -14,6 +14,7 @@ const user_model_1 = require("../app/user/user.model");
 const typeorm_1 = require("typeorm");
 const conference_model_1 = require("../app/conference/conference.model");
 const conference_review_model_1 = require("../app/conference-review/conference-review.model");
+const attendance_model_1 = require("../app/attendance/attendance.model");
 (0, typeorm_1.createConnection)({
     type: "postgres",
     host: process.env.PG_HOST,
@@ -21,7 +22,7 @@ const conference_review_model_1 = require("../app/conference-review/conference-r
     username: process.env.PG_USER,
     password: process.env.PG_PASSWORD,
     database: process.env.PG_DB,
-    entities: [user_model_1.User, conference_model_1.Conference, conference_review_model_1.ConferenceReview],
+    entities: [user_model_1.User, conference_model_1.Conference, conference_review_model_1.ConferenceReview, attendance_model_1.ConferenceAttendance],
     synchronize: true,
     logging: false,
     ssl: true,

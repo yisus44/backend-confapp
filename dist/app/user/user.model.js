@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
+const attendance_model_1 = require("../attendance/attendance.model");
 const conference_review_model_1 = require("../conference-review/conference-review.model");
 let User = class User {
 };
@@ -44,9 +45,20 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
+    (0, typeorm_1.Column)({
+        type: "boolean",
+        nullable: true,
+    }),
+    __metadata("design:type", Boolean)
+], User.prototype, "isAdmin", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => conference_review_model_1.ConferenceReview, (conferenceReview) => conferenceReview.user),
     __metadata("design:type", Array)
 ], User.prototype, "conferenceReviews", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => attendance_model_1.ConferenceAttendance, (conferenceAttendance) => conferenceAttendance.user),
+    __metadata("design:type", Array)
+], User.prototype, "attendances", void 0);
 User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

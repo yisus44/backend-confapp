@@ -34,6 +34,7 @@ function createUser(req, res) {
             user.lastName = req.body.lastName;
             user.password = req.body.password;
             user.email = req.body.email;
+            user.isAdmin = false;
             const newUser = yield repository.save(user);
             const token = (0, utils_1.generateJWT)(newUser.id);
             const response = new generic_response_1.ResponseDTO(Object.assign(Object.assign({}, newUser), { token }), true, http_status_codes_1.httpStatusCode.OK, null);

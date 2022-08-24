@@ -193,6 +193,35 @@ async function deleteConferenceAttendance(req: Request, res: Response) {
   }
 }
 
+async function patchConference(req: Request, res: Response) {
+  const errors = validationResult(req);
+  console.log(req.body);
+  try {
+    if (!errors.isEmpty()) {
+      throw new RequestValidationError(errors.array());
+    }
+    const repository = getConnection().getRepository(ConferenceAttendance);
+    const { id } = req.params;
+    const prevAttendance = await repository
+      .createQueryBuilder()
+      .delete()
+      .from(ConferenceAttendance)
+      .where("id=:id", { id })
+      .execute();
+
+    const response = new ResponseDTO(
+      prevAttendance,
+      true,
+      httpStatusCode.OK,
+      null
+    );
+    return res.status(response.statusCode).send(response);
+  } catch (error) {
+    const response = errorHandler(error);
+    res.status(response.statusCode).send(response);
+  }
+}
+
 export {
   createConferenceAttendance,
   getConferenceAttendanceById,

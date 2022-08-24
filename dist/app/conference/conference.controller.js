@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findAllConferences = exports.findConferenceById = exports.createConference = void 0;
+exports.deleteConference = exports.findAllConferences = exports.findConferenceById = exports.createConference = void 0;
 const express_validator_1 = require("express-validator");
 const utils_1 = require("../core/utils");
 const typeorm_1 = require("typeorm");
@@ -62,6 +62,7 @@ function findConferenceById(req, res) {
                 .createQueryBuilder("conf")
                 .where({ id })
                 .leftJoinAndSelect("conf.reviews", "conferenceReviews")
+                .leftJoinAndSelect("conf.attendance", "conferenceAttendace")
                 .getOne();
             if (!conferenceFound) {
                 throw new not_found_error_1.NotFoundError();
@@ -87,6 +88,7 @@ function findAllConferences(req, res) {
             const conferencesFound = yield repository
                 .createQueryBuilder("conf")
                 .leftJoinAndSelect("conf.reviews", "conferenceReviews")
+                .leftJoinAndSelect("conf.attendance", "conferenceAttendace")
                 .getMany();
             if (!conferencesFound) {
                 throw new not_found_error_1.NotFoundError();
@@ -101,4 +103,30 @@ function findAllConferences(req, res) {
     });
 }
 exports.findAllConferences = findAllConferences;
+function deleteConference(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const errors = (0, express_validator_1.validationResult)(req);
+        console.log(req.body);
+        try {
+            if (!errors.isEmpty()) {
+                throw new request_validation_error_1.RequestValidationError(errors.array());
+            }
+            const repository = (0, typeorm_1.getConnection)().getRepository(conference_model_1.Conference);
+            const { id } = req.params;
+            const prevAttendance = yield repository
+                .createQueryBuilder()
+                .delete()
+                .from(conference_model_1.Conference)
+                .where("id=:id", { id })
+                .execute();
+            const response = new generic_response_1.ResponseDTO(prevAttendance, true, http_status_codes_1.httpStatusCode.OK, null);
+            return res.status(response.statusCode).send(response);
+        }
+        catch (error) {
+            const response = (0, utils_1.errorHandler)(error);
+            res.status(response.statusCode).send(response);
+        }
+    });
+}
+exports.deleteConference = deleteConference;
 //# sourceMappingURL=conference.controller.js.map
