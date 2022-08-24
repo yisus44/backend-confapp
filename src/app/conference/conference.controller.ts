@@ -108,4 +108,38 @@ async function findAllConferences(req: Request, res: Response) {
   }
 }
 
-export { createConference, findConferenceById, findAllConferences };
+async function deleteConference(req: Request, res: Response) {
+  const errors = validationResult(req);
+  console.log(req.body);
+  try {
+    if (!errors.isEmpty()) {
+      throw new RequestValidationError(errors.array());
+    }
+    const repository = getConnection().getRepository(Conference);
+    const { id } = req.params;
+    const prevAttendance = await repository
+      .createQueryBuilder()
+      .delete()
+      .from(Conference)
+      .where("id=:id", { id })
+      .execute();
+
+    const response = new ResponseDTO(
+      prevAttendance,
+      true,
+      httpStatusCode.OK,
+      null
+    );
+    return res.status(response.statusCode).send(response);
+  } catch (error) {
+    const response = errorHandler(error);
+    res.status(response.statusCode).send(response);
+  }
+}
+
+export {
+  createConference,
+  findConferenceById,
+  findAllConferences,
+  deleteConference,
+};
